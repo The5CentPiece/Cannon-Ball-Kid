@@ -6,6 +6,7 @@ class Main():
         self.sw=ctypes.windll.user32.GetSystemMetrics(0)
         self.sh=ctypes.windll.user32.GetSystemMetrics(1)
         self.playing=1
+        self.speed=32000
         self.screen=pygame.display.set_mode((self.sw,self.sh),pygame.NOFRAME)
         self.background=pygame.Surface(self.screen.get_size())
         self.background=self.background.convert
@@ -27,11 +28,12 @@ class Main():
             key=pygame.key.get_pressed()
             if self.playing==1:
                 if key[pygame.K_d] :
-                    for i in range(48):
-                        self.plyr=pygame.image.load(str.format("cannonBallKid{}.png",math.floor((i/3)+1)))
-                        self.move()
-                        pygame.display.update()
-                        if i==47 :
+                    for i in range(16*self.speed):
+                        if i % self.speed == 0 :
+                            self.plyr=pygame.image.load(str.format("cannonBallKid{}.png",math.floor((i/self.speed)+1)))
+                            self.move()
+                            pygame.display.update()
+                        if i==self.speed-1 :
                             i=0
 
             for event in events:
