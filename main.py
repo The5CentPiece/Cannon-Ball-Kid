@@ -35,6 +35,14 @@ class Main():
                             pygame.display.update()
                         if i==self.speed-1 :
                             i=0
+                if key[pygame.K_a] :
+                    for i in range(16*self.speed):
+                        if i % self.speed == 0 :
+                            self.plyr=pygame.image.load(str.format("cannonBallKidL{}.png",math.floor((i/self.speed)+1)))
+                            self.move()
+                            pygame.display.update()
+                        if i==self.speed-1 :
+                            i=0
 
             for event in events:
                 if event.type==pygame.QUIT:
