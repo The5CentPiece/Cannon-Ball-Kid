@@ -6,7 +6,7 @@ class Main():
         self.sw=ctypes.windll.user32.GetSystemMetrics(0)
         self.sh=ctypes.windll.user32.GetSystemMetrics(1)
         self.playing=1
-        self.speed=32000
+        self.speed=1
         self.screen=pygame.display.set_mode((self.sw,self.sh),pygame.NOFRAME)
         self.background=pygame.Surface(self.screen.get_size())
         self.background=self.background.convert
@@ -21,8 +21,8 @@ class Main():
 
     def runGame(self):
         pygame.init()
-        self.clock.tick(1000/60)
         while True:
+            self.clock.tick(60)
             #movement
             events=pygame.event.get()
             key=pygame.key.get_pressed()
@@ -35,6 +35,7 @@ class Main():
                             pygame.display.update()
                         if i==self.speed-1 :
                             i=0
+                        time.sleep(.025)
                 if key[pygame.K_a] :
                     for i in range(16*self.speed):
                         if i % self.speed == 0 :
@@ -43,6 +44,7 @@ class Main():
                             pygame.display.update()
                         if i==self.speed-1 :
                             i=0
+                        time.sleep(.025)
 
             for event in events:
                 if event.type==pygame.QUIT:
