@@ -1,31 +1,23 @@
-import pygame, sys, time
-# from win32api import GetSystemMetrics
+import os
+os.environ['SDL_VIDEO_WINDOW_POS']='%d, %d' % (0,0)
+import pygame, sys, time, ctypes, math
 class Main():
     def __init__(self):
-        # self.screen=pygame.display.set_mode(,)
-        #self.sw=2160
-        #self.sh=1440
-        #variable for if the game is running
-        self.playing=1;
-        self.screen=pygame.display.set_mode((1920,1080),pygame.FULLSCREEN)
+        self.sw=ctypes.windll.user32.GetSystemMetrics(0)
+        self.sh=ctypes.windll.user32.GetSystemMetrics(1)
+        self.playing=1
+        self.screen=pygame.display.set_mode((self.sw,self.sh),pygame.NOFRAME)
         self.background=pygame.Surface(self.screen.get_size())
         self.background=self.background.convert
         self.screen_color=(0,0,0)
-        self.screen.fill([221,253,255])
-        self.plyry=640
+        self.plyry=840
         self.clock=pygame.time.Clock()
         self.plyr=pygame.image.load("cannonBallKid.png")
-        self.plyr = pygame.transform.scale(self.plyr,(160,160))
         self.clouds=pygame.image.load("clouds.png")
-        self.clouds = pygame.transform.scale(self.clouds,(1920,1080))
-        self.screen.blit(self.plyr, (880,(self.plyry)))
-        self.screen.blit(self.clouds, (0,0))
-        # if((self.sw/1920)>(self.sh/1080)):
-        #     self.screen.blit(self.plyr, (880+((((self.sw/self.sh)*(9/16)*1920)-1920)/2),(self.plyry)))
-        #     self.screen.blit(self.clouds, (0+((((self.sw/self.sh)*(9/16)*1920)-1920)/2),0))
-        # else:
-        #     self.screen.blit(self.plyr, (880,(self.plyry+((((self.sh/self.sw)*(16/9)*1080)-1080)/2))))
-        #     self.screen.blit(self.clouds, (0,0+((((self.sh/self.sw)*(16/9)*1080)-1080)/2)))
+        self.move()
+
+
+
     def runGame(self):
         pygame.init()
         self.clock.tick(1000/60)
@@ -34,8 +26,13 @@ class Main():
             events=pygame.event.get()
             key=pygame.key.get_pressed()
             if self.playing==1:
-                if key[pygame.K_d]:
-                    pygame.display.update()
+                if key[pygame.K_d] :
+                    for i in range(48):
+                        self.plyr=pygame.image.load(str.format("cannonBallKid{}.png",math.floor((i/3)+1)))
+                        self.move()
+                        pygame.display.update()
+                        if i==47 :
+                            i=0
 
             for event in events:
                 if event.type==pygame.QUIT:
@@ -44,6 +41,18 @@ class Main():
 
             pygame.display.update()
 
+    def move(self):
+        self.screen.fill([221,253,255])
+        if((self.sw/1920)>(self.sh/1080)):
+            #like an ultrawide
+            self.clouds = pygame.transform.scale(self.clouds,(math.floor(self.sh*16/9),math.floor(self.sh)))
+            self.plyr = pygame.transform.scale(self.plyr,(math.floor(self.sh*4/27),math.floor(self.sh*4/27)))
+            self.screen.blit(self.plyr, (math.floor(self.sh*(16/9)*(15/32)),math.floor(self.plyry*self.sh)))
+        else:
+            self.clouds = pygame.transform.scale(self.clouds,(math.floor(self.sw),math.floor(self.sw*9/16)))
+            self.plyr = pygame.transform.scale(self.plyr,(math.floor(self.sw/12),math.floor(self.sw/12)))
+            self.screen.blit(self.plyr, (math.floor(self.sw*(15/32)),math.floor(self.plyry*((self.sw*9/16)/1080))))
+        self.screen.blit(self.clouds, (0,0))
 
 def main():
     while True:
