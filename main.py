@@ -7,6 +7,8 @@ class Main():
         self.sh=ctypes.windll.user32.GetSystemMetrics(1)
         self.playing=1
         self.speed=1
+        self.rolling=0
+        self.facing=0
         self.screen=pygame.display.set_mode((self.sw,self.sh),pygame.NOFRAME)
         self.background=pygame.Surface(self.screen.get_size())
         self.background=self.background.convert
@@ -27,25 +29,26 @@ class Main():
             events=pygame.event.get()
             key=pygame.key.get_pressed()
             if self.playing==1:
-                if key[pygame.K_d] :
+                if key[pygame.K_d] and self.rolling==0 :
+                    #print(1)
+                    self.facing=1
                     for i in range(16*self.speed):
                         if i % self.speed == 0 :
                             self.plyr=pygame.image.load(str.format("cannonBallKid{}.png",math.floor((i/self.speed)+1)))
                             self.move()
-                            pygame.display.update()
                         if i==self.speed-1 :
                             i=0
                         time.sleep(.025)
-                if key[pygame.K_a] :
+                if key[pygame.K_a] and self.rolling==0:
+                    #print(0)
+                    self.facing=0
                     for i in range(16*self.speed):
                         if i % self.speed == 0 :
                             self.plyr=pygame.image.load(str.format("cannonBallKidL{}.png",math.floor((i/self.speed)+1)))
                             self.move()
-                            pygame.display.update()
                         if i==self.speed-1 :
                             i=0
                         time.sleep(.025)
-
             for event in events:
                 if event.type==pygame.QUIT:
                     sys.exit()
@@ -65,6 +68,7 @@ class Main():
             self.plyr = pygame.transform.scale(self.plyr,(math.floor(self.sw/12),math.floor(self.sw/12)))
             self.screen.blit(self.plyr, (math.floor(self.sw*(15/32)),math.floor(self.plyry*((self.sw*9/16)/1080))))
         self.screen.blit(self.clouds, (0,0))
+        pygame.display.update()
 
 def main():
     while True:
