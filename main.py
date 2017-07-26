@@ -76,25 +76,6 @@ class Main():
                         self.still=1
                         self.plyr=pygame.image.load("cannonBallKidLS.png")
                         self.move()
-                # while key[pygame.K_d]==:
-                    # if self.rt % self.speed == 0 :
-                    #     self.facing=1
-                    #     self.plyr=pygame.image.load(str.format("cannonBallKid{}.png",math.floor((self.rt/self.speed)+1)))
-                    #     self.move()
-                    # self.rt=self.rt+1
-                    # if self.rt==16*self.speed-1:
-                    #     self.rt=0
-                    # time.sleep(.025)
-                # if key[pygame.K_a] and self.rolling==0:
-                #     #print(0)
-                #     self.facing=0
-                #     for i in range(16*self.speed):
-                #         if i % self.speed == 0 :
-                #             self.plyr=pygame.image.load(str.format("cannonBallKidL{}.png",math.floor((i/self.speed)+1)))
-                #             self.move()
-                #         if i==self.speed-1 :
-                #             i=0
-                #         time.sleep(.025)
             for event in events:
                 if event.type==pygame.QUIT:
                     sys.exit()
@@ -118,7 +99,7 @@ class Main():
             else:
                 self.screen.blit(self.cloudsTwo, ((self.cloudx*((self.sh*16/9)/1920)-self.sh*(16/9)),0))
 
-            self.screen.blit(self.plyr, (math.floor(self.sh*(16/9)*(15/32)),math.floor(self.plyry*self.sh)))
+            self.screen.blit(self.plyr, (math.floor(self.sh*(16/9)*(23/54)),math.floor(self.plyry*self.sh)))
             self.screen.blit(self.ship, (self.shipx*((self.sh*16/9)/1920),math.floor(955*self.sh)))
             if self.shipx<=0:
                 self.screen.blit(self.shipTwo, ((self.shipx*((self.sh*16/9)/1920)+self.sh*(16/9)),math.floor(955*self.sh)))
@@ -136,7 +117,7 @@ class Main():
                 self.screen.blit(self.cloudsTwo, (self.cloudx*(self.sw/1920)+self.sw,0))
             else:
                 self.screen.blit(self.cloudsTwo, (self.cloudx*(self.sw/1920)-self.sw,0))
-            self.screen.blit(self.plyr, (math.floor(self.sw*(15/32)),math.floor(self.plyry*((self.sw*9/16)/1080))))
+            self.screen.blit(self.plyr, (math.floor(self.sw*(11/24)),math.floor(self.plyry*((self.sw*9/16)/1080))))
 
             self.screen.blit(self.ship, (self.shipx*(self.sw/1920),955*((self.sw*9/16)/1080)))
             if self.shipx<=0:
