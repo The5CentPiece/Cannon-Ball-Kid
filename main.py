@@ -42,6 +42,23 @@ class Main():
             events=pygame.event.get()
             key=pygame.key.get_pressed()
             if self.playing==1:
+                if key[pygame.K_SPACE] and self.rolling==0 and self.jumping==0:
+                    self.jumping=1
+                    self.still=0
+                    for i in range(16):
+                        if self.facing==1:
+                            self.plyr=pygame.image.load("cannonBallKidJumpR.png")
+                        else:
+                            self.plyr=pygame.image.load("cannonBallKidJumpL.png")
+                        if i<8:
+                            self.plyry=self.plyry-25
+                        else:
+                            self.plyry=self.plyry+25
+                        self.walking()
+                        self.move()
+                        i=i+1
+                        time.sleep(self.quick)
+                    self.jumping=0
                 if key[pygame.K_d] and key[pygame.K_s] and key[pygame.K_a]==0 and self.rolling==0 and self.cooldown<=0:
                     self.rolling=1
                     self.facing=1
@@ -82,43 +99,8 @@ class Main():
                 if self.cooldown>0:
                     self.cooldown=self.cooldown-.1
 
-                if key[pygame.K_d] and key[pygame.K_a]==0 and self.rolling==0:
-                    self.still=0
-                    if self.rt % self.speed == 0 :
-                        self.facing=1
-                        self.plyr=pygame.image.load(str.format("cannonBallKid{}.png",math.floor((self.rt/self.speed)+1)))
-                    self.rt=self.rt+1
-                    if self.rt==16*self.speed-1:
-                        self.rt=0
-                    self.cloudx=self.cloudx-2/self.speed
-                    self.shipx=self.shipx-10/self.speed
-                    self.move()
-                    time.sleep(self.quick)
-                else:
-                    self.rt=0
-                    if self.jumping==0 and self.rolling==0 and self.facing==1 and self.still==0:
-                        self.still=1
-                        self.plyr=pygame.image.load("cannonBallKidS.png")
-                        self.move()
+                self.walking()
 
-                if key[pygame.K_a] and key[pygame.K_d]==0 and self.rolling==0:
-                    self.still=0
-                    if self.lt % self.speed == 0 :
-                        self.facing=0
-                        self.plyr=pygame.image.load(str.format("cannonBallKidL{}.png",math.floor((self.lt/self.speed)+1)))
-                    self.lt=self.lt+1
-                    if self.lt==16*self.speed-1:
-                        self.lt=0
-                    self.cloudx=self.cloudx+2/self.speed
-                    self.shipx=self.shipx+10/self.speed
-                    self.move()
-                    time.sleep(self.quick)
-                else:
-                    self.lt=0
-                    if self.jumping==0 and self.rolling==0 and self.facing==0 and self.still==0:
-                        self.still=1
-                        self.plyr=pygame.image.load("cannonBallKidLS.png")
-                        self.move()
             for event in events:
                 if event.type==pygame.QUIT:
                     sys.exit()
@@ -173,6 +155,47 @@ class Main():
             self.cloudx=0
         pygame.display.update()
 
+    def walking(self):
+        key=pygame.key.get_pressed()
+        if key[pygame.K_d] and key[pygame.K_a]==0 and self.rolling==0:
+            self.still=0
+            if self.rt % self.speed == 0 and self.jumping==0:
+                self.facing=1
+                self.plyr=pygame.image.load(str.format("cannonBallKid{}.png",math.floor((self.rt/self.speed)+1)))
+                self.move()
+            self.rt=self.rt+1
+            if self.rt==16*self.speed-1:
+                self.rt=0
+            self.cloudx=self.cloudx-2/self.speed
+            self.shipx=self.shipx-10/self.speed
+            if self.jumping==0:
+                time.sleep(self.quick)
+        else:
+            self.rt=0
+            if self.jumping==0 and self.rolling==0 and self.facing==1 and self.still==0:
+                self.still=1
+                self.plyr=pygame.image.load("cannonBallKidS.png")
+                self.move()
+
+        if key[pygame.K_a] and key[pygame.K_d]==0 and self.rolling==0:
+            self.still=0
+            if self.lt % self.speed == 0 and self.jumping==0:
+                self.facing=0
+                self.plyr=pygame.image.load(str.format("cannonBallKidL{}.png",math.floor((self.lt/self.speed)+1)))
+                self.move()
+            self.lt=self.lt+1
+            if self.lt==16*self.speed-1:
+                self.lt=0
+            self.cloudx=self.cloudx+2/self.speed
+            self.shipx=self.shipx+10/self.speed
+            if self.jumping==0:
+                time.sleep(self.quick)
+        else:
+            self.lt=0
+            if self.jumping==0 and self.rolling==0 and self.facing==0 and self.still==0:
+                self.still=1
+                self.plyr=pygame.image.load("cannonBallKidLS.png")
+                self.move()
 def main():
     while True:
         main = Main()
