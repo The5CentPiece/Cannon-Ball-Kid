@@ -22,6 +22,7 @@ class Main():
         self.screen_color=(0,0,0)
         self.plyry=840
         self.cloudx=0
+        self.bGColor=[221,253,255]
         self.clock=pygame.time.Clock()
         self.plyr=pygame.image.load("cannonBallKid.png")
         self.clouds=pygame.image.load("clouds.png")
@@ -126,7 +127,7 @@ class Main():
             pygame.display.update()
 
     def move(self):
-        self.screen.fill([221,253,255])
+        self.screen.fill(self.bGColor)
         if((self.sw/1920)>(self.sh/1080)):
             #like an ultrawide
             self.clouds = pygame.transform.scale(self.clouds,(math.floor(self.sh*16/9),math.floor(self.sh/2)))
