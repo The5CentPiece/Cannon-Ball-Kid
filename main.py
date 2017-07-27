@@ -1,6 +1,7 @@
 import os
 os.environ['SDL_VIDEO_WINDOW_POS']='%d, %d' % (0,0)
 import pygame, sys, time, ctypes, math
+from PIL import Image
 class Main():
     def __init__(self):
         self.sw=ctypes.windll.user32.GetSystemMetrics(0)
@@ -9,6 +10,7 @@ class Main():
         self.speed=1
         self.quick=.025
         self.rolling=0
+        self.cooldown=0
         self.facing=1
         self.jumping=0
         self.still=1
@@ -39,6 +41,46 @@ class Main():
             events=pygame.event.get()
             key=pygame.key.get_pressed()
             if self.playing==1:
+                if key[pygame.K_d] and key[pygame.K_s] and key[pygame.K_a]==0 and self.rolling==0 and self.cooldown<=0:
+                    self.rolling=1
+                    self.facing=1
+                    self.still=0
+                    self.plyry=self.plyry+30
+                    for i in range(16*self.speed):
+                        if i % self.speed == 0 :
+                            self.plyr=Image.open("cannonBallKidRollR.png")
+                            self.plyr=self.plyr.rotate(-22.5*(i/self.speed))
+                        self.plyr=pygame.image.fromstring(self.plyr.tobytes("raw", 'RGBA'),(32,32),'RGBA')
+                        self.cloudx=self.cloudx-3/self.speed
+                        self.shipx=self.shipx-15/self.speed
+                        self.move()
+                        i=i+1
+                        time.sleep(self.quick)
+                    self.plyry=self.plyry-30
+                    self.rolling=0
+                    self.cooldown=5
+
+                if key[pygame.K_a] and key[pygame.K_s] and key[pygame.K_d]==0 and self.rolling==0 and self.cooldown<=0:
+                    self.rolling=1
+                    self.facing=1
+                    self.still=0
+                    self.plyry=self.plyry+30
+                    for i in range(16*self.speed):
+                        if i % self.speed == 0 :
+                            self.plyr=Image.open("cannonBallKidRollL.png")
+                            self.plyr=self.plyr.rotate(22.5*(i/self.speed))
+                        self.plyr=pygame.image.fromstring(self.plyr.tobytes("raw", 'RGBA'),(32,32),'RGBA')
+                        self.cloudx=self.cloudx+3/self.speed
+                        self.shipx=self.shipx+15/self.speed
+                        self.move()
+                        i=i+1
+                        time.sleep(self.quick)
+                    self.plyry=self.plyry-30
+                    self.rolling=0
+                    self.cooldown=5
+                if self.cooldown>0:
+                    self.cooldown=self.cooldown-.1
+
                 if key[pygame.K_d] and key[pygame.K_a]==0 and self.rolling==0:
                     self.still=0
                     if self.rt % self.speed == 0 :
@@ -124,9 +166,9 @@ class Main():
                 self.screen.blit(self.shipTwo, (self.shipx*(self.sw/1920)+self.sw,955*((self.sw*9/16)/1080)))
             else:
                 self.screen.blit(self.shipTwo, (self.shipx*(self.sw/1920)-self.sw,955*((self.sw*9/16)/1080)))
-        if self.shipx==(-1920) or self.shipx==(1920):
+        if self.shipx<=(-1920) or self.shipx>=(1920):
             self.shipx=0
-        if self.cloudx==(-1920) or self.cloudx==(1920):
+        if self.cloudx<=(-1920) or self.cloudx>=(1920):
             self.cloudx=0
         pygame.display.update()
 
