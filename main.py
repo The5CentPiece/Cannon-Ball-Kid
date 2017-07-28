@@ -45,15 +45,23 @@ class Main():
                 if key[pygame.K_SPACE] and self.rolling==0 and self.jumping==0:
                     self.jumping=1
                     self.still=0
-                    for i in range(16):
+                    for i in range(24):
                         if self.facing==1:
                             self.plyr=pygame.image.load("cannonBallKidJumpR.png")
                         else:
                             self.plyr=pygame.image.load("cannonBallKidJumpL.png")
-                        if i<8:
+                        if i<6:
+                            self.plyry=self.plyry-30
+                        elif i<9:
                             self.plyry=self.plyry-25
-                        else:
+                        elif i<12:
+                            self.plyry=self.plyry-15
+                        elif i<15:
+                            self.plyry=self.plyry+15
+                        elif i<18:
                             self.plyry=self.plyry+25
+                        else:
+                            self.plyry=self.plyry+30
                         self.walking()
                         self.move()
                         i=i+1
