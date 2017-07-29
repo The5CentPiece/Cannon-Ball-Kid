@@ -32,6 +32,7 @@ class Main():
         self.shipTwo=pygame.image.load("ship.png")
         self.wood=pygame.image.load("wood.png")
         self.metal=pygame.image.load("metal.png")
+        self.metal=pygame.image.load("metal.png")
         self.spike=pygame.image.load("spike.png")
         self.shipx=0
         self.mapPos=0
@@ -147,14 +148,14 @@ class Main():
             else:
                 self.screen.blit(self.cloudsTwo, ((self.cloudx*((self.sh*16/9)/1920)-self.sh*(16/9)),0))
 
-                for i in range(len(self.layout)):
-                    for j in range(len(eval(levelNum+".row1"))):
-                        posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
-                        if posNum==1:
-                            self.screen.blit(self.wood, ((j*80+self.mapPos)*((self.sh*16/9)/1920),i*80*((self.sh*16/9)/1920)))
+            for i in range(len(self.layout)):
+                for j in range(len(eval(levelNum+".row1"))):
+                    posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
+                    if posNum==1:
+                        self.screen.blit(self.wood, ((j*80+self.mapPos)*((self.sh*16/9)/1920),i*80*((self.sh*16/9)/1920)))
 
-                        j+=1
-                    i+=1
+                    j+=1
+                i+=1
             self.screen.blit(self.plyr, (math.floor(self.sh*(16/9)*(23/54)),math.floor(self.plyry*self.sh)))
             self.screen.blit(self.ship, (self.shipx*((self.sh*16/9)/1920),math.floor(955*self.sh)))
             if self.shipx<=0:
@@ -174,14 +175,13 @@ class Main():
                 self.screen.blit(self.cloudsTwo, (self.cloudx*(self.sw/1920)+self.sw,0))
             else:
                 self.screen.blit(self.cloudsTwo, (self.cloudx*(self.sw/1920)-self.sw,0))
-                for i in range(len(self.layout)):
-                    for j in range(len(eval(levelNum+".row1"))):
-                        posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
-                        if posNum==1:
-                            self.screen.blit(self.wood, ((j*80+self.mapPos)*(self.sw/1920),i*80*((self.sw)/1920)))
-
-                        j+=1
-                    i+=1
+            for i in range(len(self.layout)):
+                for j in range(len(eval(levelNum+".row1"))):
+                    posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
+                    if posNum==1:
+                        self.screen.blit(self.wood, ((j*80+self.mapPos)*(self.sw/1920),i*80*((self.sw)/1920)))
+                    j+=1
+                i+=1
             self.screen.blit(self.plyr, (math.floor(self.sw*(11/24)),math.floor(self.plyry*((self.sw*9/16)/1080))))
 
             self.screen.blit(self.ship, (self.shipx*(self.sw/1920),955*((self.sw*9/16)/1080)))
@@ -193,7 +193,6 @@ class Main():
             self.shipx=0
         if self.cloudx<=(-1920) or self.cloudx>=(1920):
             self.cloudx=0
-        print (self.mapPos)
         pygame.display.update()
     def walking(self):
         if self.stuck==0:
