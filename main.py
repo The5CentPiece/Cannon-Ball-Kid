@@ -8,7 +8,7 @@ class Main():
         self.sh=ctypes.windll.user32.GetSystemMetrics(1)
         self.playing=1
         self.speed=1
-        self.quick=.025
+        self.quick=.015
         self.rolling=0
         self.cooldown=0
         self.facing=1
@@ -32,8 +32,8 @@ class Main():
         self.shipTwo=pygame.image.load("ship.png")
         self.wood=pygame.image.load("wood.png")
         self.metal=pygame.image.load("metal.png")
-        self.metal=pygame.image.load("metal.png")
         self.spike=pygame.image.load("spike.png")
+        self.cannon=pygame.image.load("cannon.png")
         self.shipx=0
         self.mapPos=0
         self.level1=level1.level1()
@@ -45,7 +45,7 @@ class Main():
         self.setLevel(str.format("self.level{}",self.level))
         self.move(str.format("self.level{}",self.level))
         while True:
-            self.clock.tick(60)
+
             #movement
             events=pygame.event.get()
             key=pygame.key.get_pressed()
@@ -141,6 +141,10 @@ class Main():
             self.shipTwo = pygame.transform.scale(self.shipTwo,(math.floor(self.sh*16/9),math.floor(self.sh/2)))
             self.plyr = pygame.transform.scale(self.plyr,(math.floor(self.sh*4/27),math.floor(self.sh*4/27)))
             self.wood = pygame.transform.scale(self.wood,(math.floor(80*(self.sh*16/9)/1920),math.floor(80*(self.sh)/1080)))
+            self.metal = pygame.transform.scale(self.metal,(math.floor(80*(self.sh*16/9)/1920),math.floor(80*(self.sh)/1080)))
+            self.spike = pygame.transform.scale(self.spike,(math.floor(80*(self.sh*16/9)/1920),math.floor(80*(self.sh)/1080)))
+            self.cannon = pygame.transform.scale(self.cannon,(math.floor(160*(self.sh*16/9)/1920),math.floor(160*(self.sh)/1080)))
+
 
             self.screen.blit(self.clouds, (self.cloudx*((self.sh*16/9)/1920),0))
             if self.cloudx<=0:
@@ -153,7 +157,12 @@ class Main():
                     posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
                     if posNum==1:
                         self.screen.blit(self.wood, ((j*80+self.mapPos)*((self.sh*16/9)/1920),i*80*((self.sh*16/9)/1920)))
-
+                    if posNum==2:
+                        self.screen.blit(self.metal, ((j*80+self.mapPos)*((self.sh*16/9)/1920),i*80*((self.sh*16/9)/1920)))
+                    if posNum==3:
+                        self.screen.blit(self.spike, ((j*80+self.mapPos)*((self.sh*16/9)/1920),i*80*((self.sh*16/9)/1920)))
+                    if posNum==4:
+                        self.screen.blit(self.cannon, ((j*80+self.mapPos)*((self.sh*16/9)/1920),i*80*((self.sh*16/9)/1920)))
                     j+=1
                 i+=1
             self.screen.blit(self.plyr, (math.floor(self.sh*(16/9)*(23/54)),math.floor(self.plyry*self.sh)))
@@ -170,6 +179,11 @@ class Main():
             self.shipTwo = pygame.transform.scale(self.shipTwo,(math.floor(self.sw),math.floor(self.sw*9/32)))
             self.plyr = pygame.transform.scale(self.plyr,(math.floor(self.sw/12),math.floor(self.sw/12)))
             self.wood = pygame.transform.scale(self.wood,(math.floor(80*(self.sw)/1920),math.floor(80*(self.sw*9/16)/1080)))
+            self.metal = pygame.transform.scale(self.metal,(math.floor(80*(self.sw)/1920),math.floor(80*(self.sw*9/16)/1080)))
+            self.spike = pygame.transform.scale(self.spike,(math.floor(80*(self.sw)/1920),math.floor(80*(self.sw*9/16)/1080)))
+            self.cannon = pygame.transform.scale(self.cannon,(math.floor(160*(self.sw)/1920),math.floor(160*(self.sw*9/16)/1080)))
+
+
             self.screen.blit(self.clouds, (self.cloudx*(self.sw/1920),0))
             if self.cloudx<=0:
                 self.screen.blit(self.cloudsTwo, (self.cloudx*(self.sw/1920)+self.sw,0))
@@ -180,6 +194,12 @@ class Main():
                     posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
                     if posNum==1:
                         self.screen.blit(self.wood, ((j*80+self.mapPos)*(self.sw/1920),i*80*((self.sw)/1920)))
+                    if posNum==2:
+                        self.screen.blit(self.metal, ((j*80+self.mapPos)*(self.sw/1920),i*80*((self.sw)/1920)))
+                    if posNum==3:
+                        self.screen.blit(self.spike, ((j*80+self.mapPos)*(self.sw/1920),i*80*((self.sw)/1920)))
+                    if posNum==4:
+                        self.screen.blit(self.cannon, ((j*80+self.mapPos)*(self.sw/1920),i*80*((self.sw)/1920)))
                     j+=1
                 i+=1
             self.screen.blit(self.plyr, (math.floor(self.sw*(11/24)),math.floor(self.plyry*((self.sw*9/16)/1080))))
