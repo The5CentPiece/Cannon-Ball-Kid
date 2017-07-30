@@ -1,6 +1,10 @@
 import os
 os.environ['SDL_VIDEO_WINDOW_POS']='%d, %d' % (0,0)
-import pygame, sys, time, ctypes, math, level0, level1
+levelImp=[]
+for lv in range(2):
+    levelImp.append(__import__(str.format("level{}",lv), globals(), locals(), [], 0))
+    lv+=1
+import pygame, sys, time, ctypes, math
 from PIL import Image
 class Main():
     def __init__(self):
@@ -45,7 +49,7 @@ class Main():
             if str.format("level{}",i) not in sys.modules:
                 break
             else:
-                self.levelOn.append(eval(str.format("level{}.level{}()",i,i)))
+                self.levelOn.append(eval(str.format("levelImp[{}].level{}()",i,i)))
                 i+=1
         self.level=0
 
