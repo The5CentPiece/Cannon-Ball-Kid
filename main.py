@@ -282,9 +282,12 @@ main()
 class Kiddo(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.plyrRectV = pygame.Rect(plyry+25, 938, 50, 130)
-        self.plyrRectH = pygame.Rect(plyry+45, 910, 100, 70)
+        self.plyrRect = pygame.Rect(910, self.plyry+30, 100, 85)
 class Block(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.blockRect = pygame.Rect(x, y, 80, 80)
+class Spike(pygame.sprite.Sprite)
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.blockRect = pygame.Rect(x+20, y, 40, 80)
