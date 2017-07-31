@@ -98,7 +98,7 @@ class Main():
                     self.plyry=self.plyry+30
                     for i in range(16*self.speed):
                         if i % self.speed == 0 :
-                            self.plyr=Image.open("cannonBallKidRollR.png")
+                            self.plyr=Image.open("Images/cannonBallKidRollR.png")
                             self.plyr=self.plyr.rotate(-22.5*(i/self.speed))
                         self.plyr=pygame.image.fromstring(self.plyr.tobytes("raw", 'RGBA'),(32,32),'RGBA')
                         self.cloudx=self.cloudx-3/self.speed

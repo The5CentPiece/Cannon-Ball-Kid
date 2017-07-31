@@ -2,7 +2,7 @@ import pygame
 class kiddo(pygame.sprite.Sprite):
     def __init__(self,y):
         pygame.sprite.Sprite.__init__(self)
-        self.plyrRect = pygame.Rect(910, y+30, 100, 85)
+        self.plyrRect = pygame.Rect(910, y+30, 100, 130)
 class wood(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
