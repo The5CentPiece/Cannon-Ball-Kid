@@ -4,8 +4,9 @@ levelImp=[]
 for lv in range(2):
     levelImp.append(__import__(str.format("level{}",lv), globals(), locals(), [], 0))
     lv+=1
-import pygame, sys, time, ctypes, math
+import pygame, sys, time, ctypes, math, spriteClasses
 from PIL import Image
+
 class Main():
     def __init__(self):
         self.sw=ctypes.windll.user32.GetSystemMetrics(0)
@@ -52,6 +53,7 @@ class Main():
                 self.levelOn.append(eval(str.format("levelImp[{}].level{}()",i,i)))
                 i+=1
         self.level=0
+        self.kiddo=spriteClasses.kiddo(self.plyry)
 
 
     def runGame(self):
@@ -227,6 +229,8 @@ class Main():
             self.shipx=0
         if self.cloudx<=(-1920) or self.cloudx>=(1920):
             self.cloudx20
+        self.kiddo.plyrRect.move(910, self.plyry+30)
+
         pygame.display.update()
     def walking(self):
         if self.stuck==0:
@@ -278,16 +282,3 @@ def main():
         main.runGame()
 
 main()
-
-class Kiddo(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.plyrRect = pygame.Rect(910, self.plyry+30, 100, 85)
-class Block(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.blockRect = pygame.Rect(x, y, 80, 80)
-class Spike(pygame.sprite.Sprite)
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.blockRect = pygame.Rect(x+20, y, 40, 80)
