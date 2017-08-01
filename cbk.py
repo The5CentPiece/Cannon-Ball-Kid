@@ -54,8 +54,8 @@ class Main():
                 i+=1
         self.level=0
         #objects for sprite classes
-        self.kiddo=spriteClasses.kiddo(self.plyry)
-
+        self.kiddo=spriteClasses.Kiddo(self.plyry)
+        self.blocks=spriteClasses.Blocks()
 
         self.obstruction=[0,0,0,0]
 
@@ -148,21 +148,17 @@ class Main():
 
     def setLevel(self, levelNum):
         self.layout=eval(levelNum+".layout")
-        self.woodRect = []
-        self.metalRect = []
-        self.spikeRect = []
-        self.cannonRect = []
         for i in range(len(self.layout)):
             for j in range(len(eval(levelNum+".row1"))):
                 posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
                 if posNum==1:
-                    spriteClasses.block(self.woodRect,j*80+self.mapPos,i*80)
+                    spriteClasses.Wood(self.blocks.woodRect,j*80+self.mapPos,i*80)
                 if posNum==2:
-                    spriteClasses.block(self.metalRect,j*80+self.mapPos,i*80)
+                    spriteClasses.Metal(self.blocks.metalRect,j*80+self.mapPos,i*80)
                 if posNum==3:
-                    spriteClasses.spike(self.spikeRect,j*80+self.mapPos,i*80)
+                    spriteClasses.Spike(self.blocks.spikeRect,j*80+self.mapPos,i*80)
                 if posNum==4:
-                    spriteClasses.cannon(self.cannonRect,j*80+self.mapPos,i*80)
+                    spriteClasses.Cannon(self.blocks.cannonRect,j*80+self.mapPos,i*80)
                 j+=1
             i+=1
 
@@ -259,17 +255,17 @@ class Main():
             for j in range(len(eval(levelNum+".row1"))):
                 posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
                 if posNum==1:
-                    self.woodRect[k].move(j*80+self.mapPos,i*80)
+                    self.blocks.woodRect[k].move(j*80+self.mapPos,i*80)
                     k+=1
                 if posNum==2:
-                    self.metalRect[l].move(j*80+self.mapPos,i*80)
+                    self.blocks.metalRect[l].move(j*80+self.mapPos,i*80)
                     l+=1
                 if posNum==3:
-                    self.spikeRect[m].move(j*80+self.mapPos,i*80)
+                    self.blocks.spikeRect[m].move(j*80+self.mapPos,i*80)
                     m+=1
                 if posNum==4:
-                    self.cannonRect[n].move(j*80+self.mapPos,i*80)
-                    if pygame.sprite.collide_rect(self.kiddo.plyrRect,self.cannonRect[n]):
+                    self.blocks.cannonRect[n].move(j*80+self.mapPos,i*80)
+                    if pygame.sprite.collide_rect(self.kiddo.plyrRect,self.blocks.cannonRect[n]):
                         self.level+=1
                         self.mapPos=0
                         self.plyry=840
