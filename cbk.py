@@ -53,7 +53,11 @@ class Main():
                 self.levelOn.append(eval(str.format("levelImp[{}].level{}()",i,i)))
                 i+=1
         self.level=0
+        #objects for sprite classes
         self.kiddo=spriteClasses.kiddo(self.plyry)
+
+
+        self.obstruction=[0,0,0,0]
 
 
     def runGame(self):
@@ -144,7 +148,23 @@ class Main():
 
     def setLevel(self, levelNum):
         self.layout=eval(levelNum+".layout")
-
+        self.woodRect = []
+        self.metalRect = []
+        self.spikeRect = []
+        self.cannonRect = []
+        for i in range(len(self.layout)):
+            for j in range(len(eval(levelNum+".row1"))):
+                posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
+                if posNum==1:
+                    spriteClasses.block(self.woodRect,j*80+self.mapPos,i*80)
+                if posNum==2:
+                    spriteClasses.block(self.metalRect,j*80+self.mapPos,i*80)
+                if posNum==3:
+                    spriteClasses.spike(self.spikeRect,j*80+self.mapPos,i*80)
+                if posNum==4:
+                    spriteClasses.cannon(self.cannonRect,j*80+self.mapPos,i*80)
+                j+=1
+            i+=1
 
 
     def move(self, levelNum):
@@ -225,12 +245,39 @@ class Main():
                 self.screen.blit(self.shipTwo, (self.shipx*(self.sw/1920)+self.sw,955*((self.sw*9/16)/1080)))
             else:
                 self.screen.blit(self.shipTwo, (self.shipx*(self.sw/1920)-self.sw,955*((self.sw*9/16)/1080)))
+        #for any dimensions
         if self.shipx<=(-1920) or self.shipx>=(1920):
             self.shipx=0
         if self.cloudx<=(-1920) or self.cloudx>=(1920):
             self.cloudx20
         self.kiddo.plyrRect.move(910, self.plyry+30)
-
+        k=0
+        l=0
+        m=0
+        n=0
+        for i in range(len(self.layout)):
+            for j in range(len(eval(levelNum+".row1"))):
+                posNum=eval(levelNum+(str.format(".row{}[{}]",i,j)))
+                if posNum==1:
+                    self.woodRect[k].move(j*80+self.mapPos,i*80)
+                    k+=1
+                if posNum==2:
+                    self.metalRect[l].move(j*80+self.mapPos,i*80)
+                    l+=1
+                if posNum==3:
+                    self.spikeRect[m].move(j*80+self.mapPos,i*80)
+                    m+=1
+                if posNum==4:
+                    self.cannonRect[n].move(j*80+self.mapPos,i*80)
+                    if pygame.sprite.collide_rect(self.kiddo.plyrRect,self.cannonRect[n]):
+                        self.level+=1
+                        self.mapPos=0
+                        self.plyry=840
+                        self.setLevel(str.format("self.levelOn[{}]",self.level))
+                        self.move(str.format("self.levelOn[{}]",self.level))
+                    n+=1
+                j+=1
+            i+=1
         pygame.display.update()
     def walking(self):
         if self.stuck==0:
